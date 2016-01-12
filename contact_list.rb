@@ -2,7 +2,8 @@ require_relative 'contact'
 
 # Interfaces between a user and their contact list. Reads from and writes to standard I/O.
 class ContactList
-  command = ARGV.first
+  command = ARGV[0]
+  parameter = ARGV[1]
   case command
   when nil
       puts "Here is a list of available commands:"
@@ -27,6 +28,16 @@ class ContactList
       puts "-------------------------------------------------------------------"
       puts "#{num_records} records total"
   when "show"
+    contact = Contact.find(parameter)
+    puts "#{contact[0]}: #{contact[1]}  (#{contact[2]})"
   when "search"
+    contact_list = Contact.search(parameter)
+    num_records = 0
+    contact_list.each do |contact|
+      num_records += 1
+      puts "#{contact[0]}: #{contact[1]}  (#{contact[2]})"
+    end
+    puts "-------------------------------------------------------------------"
+    puts "#{num_records} records total"
   end
 end

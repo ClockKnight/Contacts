@@ -33,12 +33,24 @@ class Contact
 
     # Returns the contact with the specified id. If no contact has the id, returns nil.
     def find(id)
-      # TODO: Find the Contact in the 'contacts.csv' file with the matching id.
+      CSV.foreach("contact_data.csv") do |line|
+        if line[0] == id
+          return line
+        end
+      end
     end
 
     # Returns an array of contacts who match the given term.
     def search(term)
-      # TODO: Select the Contact instances from the 'contacts.csv' file whose name or email attributes contain the search term.
+      contact_array = []
+      CSV.foreach("contact_data.csv") do |line|
+        if line[1].match(term)
+          contact_array << line
+        elsif line[2].match(term)
+          contact_array << line
+        end
+      end
+      return contact_array
     end
 
   end
