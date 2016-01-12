@@ -2,7 +2,31 @@ require_relative 'contact'
 
 # Interfaces between a user and their contact list. Reads from and writes to standard I/O.
 class ContactList
-
-  # TODO: Implement user interaction. This should be the only file where you use `puts` and `gets`.
-
+  command = ARGV.first
+  case command
+  when nil
+      puts "Here is a list of available commands:"
+      puts "  new    - Create a new contact"
+      puts "  list   - List all contacts"
+      puts "  show   - Show a contact"
+      puts "  search - Search contacts"
+  when "new"
+    print "Enter the contacts full name: "
+    name = $stdin.gets.chomp
+    print "Enter the contacts email address: "
+    email = $stdin.gets.chomp
+    id = Contact.create(name, email)
+    puts "Contact created with id: #{id}"
+  when "list"
+      contact_list = Contact.all
+      num_records = 0
+      contact_list.each do |contact|
+        num_records += 1
+        puts "#{contact[0]}: #{contact[1]}  (#{contact[2]})"
+      end
+      puts "-------------------------------------------------------------------"
+      puts "#{num_records} records total"
+  when "show"
+  when "search"
+  end
 end
